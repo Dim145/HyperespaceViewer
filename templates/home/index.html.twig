@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <div class="col-lg-4 d-flex justify-content-center align-items-center h-100">
+                {{ form_start(form) }}
+                {{ form_end(form) }}
+            </div>
+            <div class="col-lg-8 d-flex justify-content-center align-items-center h-100">
+                {% if notes is defined %}
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Domain</th>
+                            <th>Total</th>
+                            <th>Validated</th>
+                            <th>Not validated</th>
+                            <th>Percentage</th>
+                        </tr>
+                        </thead>
+                        {% for domain,data in notes %}
+                            <tr>
+                                <td>{{ domain }}</td>
+                                <td>{{ data['total'] }}</td>
+                                <td>{{ data['validated'] }}</td>
+                                <td>{{ data['not-validated'] }}</td>
+                                <td>{{ (data['validated']/data['total']*100)|round(2) }}%</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
