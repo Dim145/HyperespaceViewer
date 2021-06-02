@@ -77,9 +77,4 @@ class HomeController extends AbstractController
             'form' => $form
         ]);
     }
-
-    #[Route('/cookies')]
-    public function dumpCookies(Request $request) {
-        dd($request->cookies, $request);
-    }
 }
