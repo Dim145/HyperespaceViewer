@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <table class="table table-stripped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>{{ knp_pagination_sortable(classement,'Nom','c.fullName') }}</th>
+            <th>{{ knp_pagination_sortable(classement,'D1','c.D1') }}</th>
+            <th>{{ knp_pagination_sortable(classement,'D2','c.D2') }}</th>
+            <th>{{ knp_pagination_sortable(classement,'D3','c.D3') }}</th>
+            <th>{{ knp_pagination_sortable(classement,'D4','c.D4') }}</th>
+            <th>{{ knp_pagination_sortable(classement,'D5','c.D5') }}</th>
+            <th>{{ knp_pagination_sortable(classement,'D6','c.D6') }}</th>
+            <th>{{ knp_pagination_sortable(classement,'Total','c.total') }}</th>
+            <th>{{ knp_pagination_sortable(classement,'Domaines validés','c.acquieredDomains') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% set i = 1 %}
+        {% for entry in classement %}
+            <tr>
+                <td>{{ i }}{% set i = i+1 %}</td>
+                <td>{{ entry.fullName }}</td>
+                <td><span {% if entry.D1 >= 66.66 %}class="text-success">{% elseif entry.D1 >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.D1|round(2) }}%</span></td>
+                <td><span {% if entry.D2 >= 66.66 %}class="text-success">{% elseif entry.D2 >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.D2|round(2) }}%</span></td>
+                <td><span {% if entry.D3 >= 66.66 %}class="text-success">{% elseif entry.D3 >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.D3|round(2) }}%</span></td>
+                <td><span {% if entry.D4 >= 66.66 %}class="text-success">{% elseif entry.D4 >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.D4|round(2) }}%</span></td>
+                <td><span {% if entry.D5 >= 66.66 %}class="text-success">{% elseif entry.D5 >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.D5|round(2) }}%</span></td>
+                <td><span {% if entry.D6 >= 66.66 %}class="text-success">{% elseif entry.D6 >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.D6|round(2) }}%</span></td>
+                <td><span {% if entry.total >= 66.66 %}class="text-success">{% elseif entry.total >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.total|round(2) }}%</span></td>
+                <td>{{ entry.acquieredDomains }}/6</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

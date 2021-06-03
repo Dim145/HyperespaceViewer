@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Entry;
 use App\Form\CredentialsFormType;
+use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,6 +78,20 @@ class HomeController extends AbstractController
         }
         return $this->renderForm('home/index.html.twig',[
             'form' => $form
+        ]);
+    }
+
+    #[Route('/classement', name: 'app_classement')]
+    public function classement(PaginatorInterface $paginator, EntityManagerInterface $em) {
+        $classement = $paginator->paginate(
+            $em->getRepository(Entry::class)->query('c'),
+            1,
+            50,
+            ['defaultSortDirection'=>'DESC','defaultSortFieldName'=>'c.total']
+        );
+
+        return $this->renderForm('home/classement.html.twig', [
+            'classement' => $classement
         ]);
     }
 }

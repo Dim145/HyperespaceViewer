@@ -1,0 +1,135 @@
+<?php
+
+namespace App\Repository;
+
+use App\Entity\Entry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
+use Doctrine\Persistence\ManagerRegistry;
+
+/**
+ * @method Entry|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Entry|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Entry[]    findAll()
+ * @method Entry[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class EntryRepository extends ServiceEntityRepository
+{
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Entry::class);
+    }
+
+    public function query($alias, $options = [], $joins = [], $groupBy = null, $select = null): Query {
+        $query = $this->createQueryBuilder($alias);
+        if($select != null) {
+            $query->select($select);
+        }
+        elseif($groupBy) {
+            $query->select("$groupBy, COUNT($alias) as count");
+        }
+        $aliases = [$alias];
+        foreach($joins as $key=>$al) {
+            $query->leftJoin($key,$al);
+            $aliases[] = $al;
+        }
+        $queryCopy = clone $query;
+        $queryCopy->setMaxResults(1);
+        $resultCopy = $queryCopy->getQuery()->getArrayResult();
+
+        foreach($options as $name=>$value) {
+            $nameExplode = explode('.',$name,2);
+
+            if(!in_array($nameExplode[0],$aliases)) continue;
+
+            if(is_null($value)) {
+                $query->andWhere($name.' is null');
+            }
+            elseif(is_array($value)) {
+                $type = 'text';
+                $mode = 'exact';
+                if(isset($value['type'])) $type = $value['type'];
+                if(isset($value['mode'])) $mode = $value['mode'];
+                if(isset($value['value'])) {
+                    switch($type) {
+                        case 'text':
+                            switch($mode){
+                                case '%like%':
+                                    $query->andWhere($name.' LIKE :'.$nameExplode[1])->setParameter($nameExplode[1],'%'.$value['value'].'%');
+                                    break;
+                                case 'like%':
+                                    $query->andWhere($name.' LIKE :'.$nameExplode[1])->setParameter($nameExplode[1],$value['value'].'%');
+                                    break;
+                                case '%like':
+                                    $query->andWhere($name.' LIKE :'.$nameExplode[1])->setParameter($nameExplode[1],'%'.$value['value']);
+                                    break;
+                                case 'different':
+                                    $query->andWhere($name.' != :'.$nameExplode[1])->setParameter($nameExplode[1],$value['value']);
+                                    break;
+                                case '>=':
+                                    $query->andWhere($name. ' >= :'.$nameExplode[1])->setParameter($nameExplode[1], $value['value']);
+                                    break;
+                                case '>':
+                                    $query->andWhere($name. ' > :'.$nameExplode[1])->setParameter($nameExplode[1], $value['value']);
+                                    break;
+                                case '<=':
+                                    $query->andWhere($name. ' <= :'.$nameExplode[1])->setParameter($nameExplode[1], $value['value']);
+                                    break;
+                                case '<':
+                                    $query->andWhere($name. ' < :'.$nameExplode[1])->setParameter($nameExplode[1], $value['value']);
+                                    break;
+                                default:
+                                    $query->andWhere($name.' = :'.$nameExplode[1])->setParameter($nameExplode[1],$value['value']);
+                            }
+                            break;
+                        default:
+                            $query->andWhere($name.' = :'.$nameExplode[1])->setParameter($nameExplode[1],$value['value']);
+                    }
+                }
+                elseif(isset($value['values'])) {
+
+                }
+            }
+            else {
+                $query->andWhere($name.' = :'.$nameExplode[1])->setParameter($nameExplode[1],$value);
+            }
+        }
+        if($groupBy != null ) {
+            $groupByExp = explode(',',$groupBy);
+            foreach($groupByExp as $grp) {
+                if($grp === $groupByExp[0]) $query->groupBy(trim($grp));
+                else $query->addGroupBy(trim($grp));
+            }
+        }
+        return $query->getQuery();
+    }
+
+    // /**
+    //  * @return Entry[] Returns an array of Entry objects
+    //  */
+    /*
+    public function findByExampleField($value)
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('e.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    */
+
+    /*
+    public function findOneBySomeField($value): ?Entry
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    */
+}
