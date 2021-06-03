@@ -83,6 +83,15 @@ class HomeController extends AbstractController
 
     #[Route('/classement', name: 'app_classement')]
     public function classement(PaginatorInterface $paginator, EntityManagerInterface $em) {
+        $avg = [];
+        $avg['D1'] = $em->getRepository(Entry::class)->query('c',[],[],null,'AVG(c.D1) as avg_d1')->getSingleScalarResult();
+        $avg['D2'] = $em->getRepository(Entry::class)->query('c',[],[],null,'AVG(c.D2) as avg_d2')->getSingleScalarResult();
+        $avg['D3'] = $em->getRepository(Entry::class)->query('c',[],[],null,'AVG(c.D3) as avg_d3')->getSingleScalarResult();
+        $avg['D4'] = $em->getRepository(Entry::class)->query('c',[],[],null,'AVG(c.D4) as avg_d4')->getSingleScalarResult();
+        $avg['D5'] = $em->getRepository(Entry::class)->query('c',[],[],null,'AVG(c.D5) as avg_d5')->getSingleScalarResult();
+        $avg['D6'] = $em->getRepository(Entry::class)->query('c',[],[],null,'AVG(c.D6) as avg_d6')->getSingleScalarResult();
+        $avg['total'] = $em->getRepository(Entry::class)->query('c',[],[],null,'AVG(c.total) as avg_total')->getSingleScalarResult();
+        $avg['acquieredDomains'] = $em->getRepository(Entry::class)->query('c',[],[],null,'AVG(c.acquieredDomains) as avg_acquieredDomains')->getSingleScalarResult();
         $classement = $paginator->paginate(
             $em->getRepository(Entry::class)->query('c'),
             1,
@@ -91,7 +100,8 @@ class HomeController extends AbstractController
         );
 
         return $this->renderForm('home/classement.html.twig', [
-            'classement' => $classement
+            'classement' => $classement,
+            'avg' => $avg
         ]);
     }
 }

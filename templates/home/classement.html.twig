@@ -16,6 +16,17 @@
             <th>{{ knp_pagination_sortable(classement,'Total','c.total') }}</th>
             <th>{{ knp_pagination_sortable(classement,'Domaines validés','c.acquieredDomains') }}</th>
         </tr>
+        <tr>
+            <th colspan="3">Moyennes</th>
+            <th>{{ avg['D1']|round(2) }}%</th>
+            <th>{{ avg['D2']|round(2) }}%</th>
+            <th>{{ avg['D3']|round(2) }}%</th>
+            <th>{{ avg['D4']|round(2) }}%</th>
+            <th>{{ avg['D5']|round(2) }}%</th>
+            <th>{{ avg['D6']|round(2) }}%</th>
+            <th>{{ avg['total']|round(2) }}%</th>
+            <th>{{ avg['acquieredDomains']|round(2) }}%</th>
+        </tr>
         </thead>
         <tbody>
         {% set i = 1 %}
