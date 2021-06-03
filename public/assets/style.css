@@ -1,3 +1,26 @@
 body, html {
     height: 100%;
 }
+
+.body-scroll {
+
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.body-scroll thead tr:first-child th {
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+    border-bottom-width: 1px;
+}
+.body-scroll thead tr:nth-child(2) th {
+    background-color: white;
+    position: sticky;
+    top: 40px;
+    z-index: 10;
+}
