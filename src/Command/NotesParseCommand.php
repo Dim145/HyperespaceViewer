@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Entity\Entry;
+use App\Entity\Student;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
@@ -74,7 +74,7 @@ class NotesParseCommand extends Command
         $crawler = new Crawler($html);
         $crawler->filter('a')->each(function (Crawler $node, $i) use($client,$jar,$io) {
             if($node->attr('href') == '#') return;
-            $e = new Entry();
+            $e = new Student();
             $e->setFileName($node->attr('href'));
             $resp = $client->request('GET', $node->attr('href'), [
                 'cookies' => $jar,
@@ -86,7 +86,7 @@ class NotesParseCommand extends Command
             $GLOBALS['notes'] = [];
             $GLOBALS['curDomain'] = null;
             $e->setFullName($crawler->filter('h1:first-child')->text());
-            $e->setIdentifier(trim(explode(':',$crawler->filter('ul li:last-child')->text())[1]));
+            $e->setNumber(trim(explode(':',$crawler->filter('ul li:last-child')->text())[1]));
             $status = $crawler->filter('ul li:nth-child(3)')->text();
             if(trim($status) == 'Syllabus Alt') $e->setIsAlternant(true);
             $selector = $e->getIsAlternant() ? 'th.level0, td.col13' : 'th.level0, td.col15';

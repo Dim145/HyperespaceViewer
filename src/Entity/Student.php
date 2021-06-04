@@ -2,28 +2,45 @@
 
 namespace App\Entity;
 
-use App\Repository\EntryRepository;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
+use App\Repository\StudentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ORM\Entity(repositoryClass=EntryRepository::class)
+ * @ORM\Entity(repositoryClass=StudentRepository::class)
  */
-class Entry
+#[ApiResource(
+    collectionOperations: [
+        'get' => ['normalization_context'=>['groups'=>'collection:get']]
+    ],
+    itemOperations: [
+        'get' => [
+            'normalization_context'=>['groups'=>'collection:get'],
+        ]
+    ]
+)]
+class Student
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @ApiProperty(identifier=false)
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @ApiProperty(identifier=true)
+     * @Groups({"collection:get"})
      */
-    private $identifier;
+    private $number;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"collection:get"})
      */
     private $fullName;
 
@@ -34,46 +51,55 @@ class Entry
 
     /**
      * @ORM\Column(type="float")
+     * @Groups("collection:get")
      */
-    private $D1;
+    private $d1;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups("collection:get")
      */
-    private $D2;
+    private $d2;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups("collection:get")
      */
-    private $D3;
+    private $d3;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups("collection:get")
      */
-    private $D4;
+    private $d4;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups("collection:get")
      */
-    private $D5;
+    private $d5;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups("collection:get")
      */
-    private $D6;
+    private $d6;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups("collection:get")
      */
     private $total;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("collection:get")
      */
     private $acquieredDomains = 0;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups("collection:get")
      */
     private $isAlternant = false;
 
@@ -83,14 +109,14 @@ class Entry
         return $this->id;
     }
 
-    public function getIdentifier(): ?string
+    public function getNumber(): ?string
     {
-        return $this->identifier;
+        return $this->number;
     }
 
-    public function setIdentifier(string $identifier): self
+    public function setNumber(string $number): self
     {
-        $this->identifier = $identifier;
+        $this->number = $number;
 
         return $this;
     }
@@ -121,78 +147,78 @@ class Entry
 
     public function getD1(): ?float
     {
-        return $this->D1;
+        return $this->d1;
     }
 
-    public function setD1(float $D1): self
+    public function setD1(float $d1): self
     {
-        $this->D1 = $D1;
-        if($D1 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
+        $this->d1 = $d1;
+        if($d1 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
 
         return $this;
     }
 
     public function getD2(): ?float
     {
-        return $this->D2;
+        return $this->d2;
     }
 
-    public function setD2(float $D2): self
+    public function setD2(float $d2): self
     {
-        $this->D2 = $D2;
-        if($D2 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
+        $this->d2 = $d2;
+        if($d2 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
 
         return $this;
     }
 
     public function getD3(): ?float
     {
-        return $this->D3;
+        return $this->d3;
     }
 
-    public function setD3(float $D3): self
+    public function setD3(float $d3): self
     {
-        $this->D3 = $D3;
-        if($D3 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
+        $this->d3 = $d3;
+        if($d3 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
 
         return $this;
     }
 
     public function getD4(): ?float
     {
-        return $this->D4;
+        return $this->d4;
     }
 
-    public function setD4(float $D4): self
+    public function setD4(float $d4): self
     {
-        $this->D4 = $D4;
-        if($D4 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
+        $this->d4 = $d4;
+        if($d4 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
 
         return $this;
     }
 
     public function getD5(): ?float
     {
-        return $this->D5;
+        return $this->d5;
     }
 
-    public function setD5(float $D5): self
+    public function setD5(float $d5): self
     {
-        $this->D5 = $D5;
-        if($D5 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
+        $this->d5 = $d5;
+        if($d5 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
 
         return $this;
     }
 
     public function getD6(): ?float
     {
-        return $this->D6;
+        return $this->d6;
     }
 
-    public function setD6(float $D6): self
+    public function setD6(float $d6): self
     {
-        $this->D6 = $D6;
-        if($D6 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
+        $this->d6 = $d6;
+        if($d6 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
 
         return $this;
     }

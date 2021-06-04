@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\Entry;
+use App\Entity\Student;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Entry|null find($id, $lockMode = null, $lockVersion = null)
- * @method Entry|null findOneBy(array $criteria, array $orderBy = null)
- * @method Entry[]    findAll()
- * @method Entry[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Student|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Student|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Student[]    findAll()
+ * @method Student[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EntryRepository extends ServiceEntityRepository
+class StudentRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Entry::class);
+        parent::__construct($registry, Student::class);
     }
 
     public function query($alias, $options = [], $joins = [], $groupBy = null, $select = null): Query {
@@ -105,7 +105,7 @@ class EntryRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Entry[] Returns an array of Entry objects
+    //  * @return Student[] Returns an array of Student objects
     //  */
     /*
     public function findByExampleField($value)
@@ -122,7 +122,7 @@ class EntryRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Entry
+    public function findOneBySomeField($value): ?Student
     {
         return $this->createQueryBuilder('e')
             ->andWhere('e.exampleField = :val')

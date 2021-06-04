@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Entry;
+use App\Entity\Student;
 use App\Form\CredentialsFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
@@ -84,16 +84,16 @@ class HomeController extends AbstractController
     #[Route('/classement', name: 'app_classement')]
     public function classement(PaginatorInterface $paginator, EntityManagerInterface $em) {
         $avg = [];
-        $avg['D1'] = $em->getRepository(Entry::class)->query('c',[],[],null,'AVG(c.D1) as avg_d1')->getSingleScalarResult();
-        $avg['D2'] = $em->getRepository(Entry::class)->query('c',[],[],null,'AVG(c.D2) as avg_d2')->getSingleScalarResult();
-        $avg['D3'] = $em->getRepository(Entry::class)->query('c',[],[],null,'AVG(c.D3) as avg_d3')->getSingleScalarResult();
-        $avg['D4'] = $em->getRepository(Entry::class)->query('c',[],[],null,'AVG(c.D4) as avg_d4')->getSingleScalarResult();
-        $avg['D5'] = $em->getRepository(Entry::class)->query('c',[],[],null,'AVG(c.D5) as avg_d5')->getSingleScalarResult();
-        $avg['D6'] = $em->getRepository(Entry::class)->query('c',[],[],null,'AVG(c.D6) as avg_d6')->getSingleScalarResult();
-        $avg['total'] = $em->getRepository(Entry::class)->query('c',[],[],null,'AVG(c.total) as avg_total')->getSingleScalarResult();
-        $avg['acquieredDomains'] = $em->getRepository(Entry::class)->query('c',[],[],null,'AVG(c.acquieredDomains) as avg_acquieredDomains')->getSingleScalarResult();
+        $avg['D1'] = $em->getRepository(Student::class)->query('c',[],[],null,'AVG(c.d1) as avg_d1')->getSingleScalarResult();
+        $avg['D2'] = $em->getRepository(Student::class)->query('c',[],[],null,'AVG(c.d2) as avg_d2')->getSingleScalarResult();
+        $avg['D3'] = $em->getRepository(Student::class)->query('c',[],[],null,'AVG(c.d3) as avg_d3')->getSingleScalarResult();
+        $avg['D4'] = $em->getRepository(Student::class)->query('c',[],[],null,'AVG(c.d4) as avg_d4')->getSingleScalarResult();
+        $avg['D5'] = $em->getRepository(Student::class)->query('c',[],[],null,'AVG(c.d5) as avg_d5')->getSingleScalarResult();
+        $avg['D6'] = $em->getRepository(Student::class)->query('c',[],[],null,'AVG(c.d6) as avg_d6')->getSingleScalarResult();
+        $avg['total'] = $em->getRepository(Student::class)->query('c',[],[],null,'AVG(c.total) as avg_total')->getSingleScalarResult();
+        $avg['acquieredDomains'] = $em->getRepository(Student::class)->query('c',[],[],null,'AVG(c.acquieredDomains) as avg_acquieredDomains')->getSingleScalarResult();
         $classement = $paginator->paginate(
-            $em->getRepository(Entry::class)->query('c'),
+            $em->getRepository(Student::class)->query('c'),
             1,
             50,
             ['defaultSortDirection'=>'DESC','defaultSortFieldName'=>'c.total']

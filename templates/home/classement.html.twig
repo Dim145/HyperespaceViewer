@@ -7,12 +7,12 @@
             <th>#</th>
             <th>{{ knp_pagination_sortable(classement,'Nom','c.fullName') }}</th>
             <th>{{ knp_pagination_sortable(classement,'Alternant','c.isAlternant') }}</th>
-            <th>{{ knp_pagination_sortable(classement,'D1','c.D1') }}</th>
-            <th>{{ knp_pagination_sortable(classement,'D2','c.D2') }}</th>
-            <th>{{ knp_pagination_sortable(classement,'D3','c.D3') }}</th>
-            <th>{{ knp_pagination_sortable(classement,'D4','c.D4') }}</th>
-            <th>{{ knp_pagination_sortable(classement,'D5','c.D5') }}</th>
-            <th>{{ knp_pagination_sortable(classement,'D6','c.D6') }}</th>
+            <th>{{ knp_pagination_sortable(classement,'D1','c.d1') }}</th>
+            <th>{{ knp_pagination_sortable(classement,'D2','c.d2') }}</th>
+            <th>{{ knp_pagination_sortable(classement,'D3','c.d3') }}</th>
+            <th>{{ knp_pagination_sortable(classement,'D4','c.d4') }}</th>
+            <th>{{ knp_pagination_sortable(classement,'D5','c.d5') }}</th>
+            <th>{{ knp_pagination_sortable(classement,'D6','c.d6') }}</th>
             <th>{{ knp_pagination_sortable(classement,'Total','c.total') }}</th>
             <th>{{ knp_pagination_sortable(classement,'Domaines validés','c.acquieredDomains') }}</th>
         </tr>
@@ -35,12 +35,12 @@
                 <td>{{ i }}{% set i = i+1 %}</td>
                 <td>{{ entry.fullName }}</td>
                 <td>{% if entry.isAlternant %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
-                <td><span {% if entry.D1 >= 66.66 %}class="text-success">{% elseif entry.D1 >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.D1|round(2) }}%</span></td>
-                <td><span {% if entry.D2 >= 66.66 %}class="text-success">{% elseif entry.D2 >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.D2|round(2) }}%</span></td>
-                <td><span {% if entry.D3 >= 66.66 %}class="text-success">{% elseif entry.D3 >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.D3|round(2) }}%</span></td>
-                <td><span {% if entry.D4 >= 66.66 %}class="text-success">{% elseif entry.D4 >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.D4|round(2) }}%</span></td>
-                <td><span {% if entry.D5 >= 66.66 %}class="text-success">{% elseif entry.D5 >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.D5|round(2) }}%</span></td>
-                <td><span {% if entry.D6 >= 66.66 %}class="text-success">{% elseif entry.D6 >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.D6|round(2) }}%</span></td>
+                <td><span {% if entry.d1 >= 66.66 %}class="text-success">{% elseif entry.d1 >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.d1|round(2) }}%</span></td>
+                <td><span {% if entry.d2 >= 66.66 %}class="text-success">{% elseif entry.d2 >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.d2|round(2) }}%</span></td>
+                <td><span {% if entry.d3 >= 66.66 %}class="text-success">{% elseif entry.d3 >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.d3|round(2) }}%</span></td>
+                <td><span {% if entry.d4 >= 66.66 %}class="text-success">{% elseif entry.d4 >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.d4|round(2) }}%</span></td>
+                <td><span {% if entry.d5 >= 66.66 %}class="text-success">{% elseif entry.d5 >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.d5|round(2) }}%</span></td>
+                <td><span {% if entry.d6 >= 66.66 %}class="text-success">{% elseif entry.d6 >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.d6|round(2) }}%</span></td>
                 <td><span {% if entry.total >= 66.66 %}class="text-success">{% elseif entry.total >= 50 %}class="text-warning">{% else %}class="text-danger">{% endif %}{{ entry.total|round(2) }}%</span></td>
                 <td>{{ entry.acquieredDomains }}/6</td>
             </tr>
