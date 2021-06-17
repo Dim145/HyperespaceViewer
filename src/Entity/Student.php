@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\StudentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -19,8 +22,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'get' => [
             'normalization_context'=>['groups'=>'collection:get'],
         ]
+    ],
+    attributes: [
+        'order'=> ['total'=>'DESC']
     ]
 )]
+#[ApiFilter(SearchFilter::class, properties: ['number' => 'exact'])]
+#[ApiFilter(OrderFilter::class, properties: ['total', 'name', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'acquieredDomains'], arguments: ['orderParameterName' => 'order'])]
 class Student
 {
     /**
