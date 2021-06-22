@@ -104,6 +104,7 @@ class NotesParseCommand extends Command
                 }
             });
             ksort($GLOBALS['notes']);
+            $e->setAcquieredDomains(0);
             $e->setD1($GLOBALS['notes']['D1']['sum'] / $GLOBALS['notes']['D1']['count']);
             $e->setD2($GLOBALS['notes']['D2']['sum'] / $GLOBALS['notes']['D2']['count']);
             $e->setD3($GLOBALS['notes']['D3']['sum'] / $GLOBALS['notes']['D3']['count']);
