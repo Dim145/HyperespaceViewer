@@ -16,16 +16,15 @@ class CredentialsFormType extends AbstractType
         $builder
             ->add('username', TextType::class, [
                 'label' => false,
-                'attr'=>['placeholder'=>'Nom d\'utilisateur', 'class' => 'form-control bg-dark text-white']
+                'attr' => ['placeholder' => 'Nom d\'utilisateur', 'class' => 'form-control bg-dark text-white']
             ])
-            ->add('password',PasswordType::class, [
+            ->add('password', PasswordType::class, [
                 'label' => false,
-                'attr'=>['placeholder'=>'Mot de passe', 'class'=>'form-control bg-dark text-white mt-1']
+                'attr' => ['placeholder' => 'Mot de passe', 'class' => 'form-control bg-dark text-white mt-1']
             ])
             ->add('submit', SubmitType::class, [
-                'attr' => ['class'=>'w-100 btn btn-primary mt-3']
-            ])
-        ;
+                'attr' => ['class' => 'w-100 btn btn-primary mt-3']
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

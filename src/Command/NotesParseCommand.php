@@ -28,8 +28,7 @@ class NotesParseCommand extends Command
     {
         $this
             ->addArgument('username', InputArgument::REQUIRED, 'Base username')
-            ->addArgument('password', InputArgument::REQUIRED, 'Base password')
-        ;
+            ->addArgument('password', InputArgument::REQUIRED, 'Base password');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -40,19 +39,18 @@ class NotesParseCommand extends Command
 
 
         $jar = new CookieJar();
-        $client = new Client(['base_uri'=>'https://cas.univ-lehavre.fr','cookies'=>$jar]);
+        $client = new Client(['base_uri' => 'https://cas.univ-lehavre.fr', 'cookies' => $jar]);
         $resp = $client->get('/cas/login');
         $crawler = new Crawler($resp->getBody()->getContents());
         $token = $crawler->filter('input[name="lt"]')->attr('value');
         $execution = $crawler->filter('input[name="execution"]')->attr('value');
-        $resp = $client->request('POST','/cas//login',[
+        $resp = $client->request('POST', '/cas//login', [
             'allow_redirects' => false,
-            'body' => 'username='.$username.'&password='.$password.'&lt='.$token.'&execution='.$execution.'&_eventId=submit',
+            'body' => 'username=' . $username . '&password=' . $password . '&lt=' . $token . '&execution=' . $execution . '&_eventId=submit',
             'headers' => ['Content-type' => 'application/x-www-form-urlencoded'],
             'cookies' => $jar
         ]);
-        if(count($jar->toArray()) < 3 )
-        {
+        if (count($jar->toArray()) < 3) {
             $io->error('Could not retrieve data');
             return Command::FAILURE;
         }
@@ -64,8 +62,8 @@ class NotesParseCommand extends Command
         HTML;
 
         $crawler = new Crawler($html);
-        $crawler->filter('a')->each(function (Crawler $node, $i) use($client,$jar,$io) {
-            if($node->attr('href') == '#') return;
+        $crawler->filter('a')->each(function (Crawler $node, $i) use ($client, $jar, $io) {
+            if ($node->attr('href') == '#') return;
             $e = new Student();
             $e->setFileName($node->attr('href'));
             $resp = $client->request('GET', $node->attr('href'), [
@@ -78,24 +76,23 @@ class NotesParseCommand extends Command
             $GLOBALS['notes'] = [];
             $GLOBALS['curDomain'] = null;
             $e->setFullName($crawler->filter('h1:first-child')->text());
-            $e->setNumber(trim(explode(':',$crawler->filter('ul li:last-child')->text())[1]));
+            $e->setNumber(trim(explode(':', $crawler->filter('ul li:last-child')->text())[1]));
             //if($student = $this->em->getRepository(Student::class)->findOneBy(['number'=>$e->getNumber()])) $e = $student;
             $status = $crawler->filter('ul li:nth-child(3)')->text();
-            if(trim($status) == 'Syllabus Alt') $e->setIsAlternant(true);
+            if (trim($status) == 'Syllabus Alt') $e->setIsAlternant(true);
             $selector = $e->getIsAlternant() ? 'th.level0, td.col13' : 'th.level0, td.col15';
             $crawler->filter($selector)->each(function (Crawler $node, $i) {
-                if(preg_match('/^D[0-9]$/', $node->text()) == 1) {
-                    if(!isset($GLOBALS['notes'][$node->text()])) {
+                if (preg_match('/^D[0-9]$/', $node->text()) == 1) {
+                    if (!isset($GLOBALS['notes'][$node->text()])) {
                         $GLOBALS['notes'][$node->text()] = [
                             'count' => 0,
                             'sum' => 0
                         ];
                     }
                     $GLOBALS['curDomain'] = $node->text();
-                }
-                elseif($GLOBALS['curDomain'] != null) {
+                } elseif ($GLOBALS['curDomain'] != null) {
                     $GLOBALS['notes'][$GLOBALS['curDomain']]['count']++;
-                    $GLOBALS['notes'][$GLOBALS['curDomain']]['sum'] += intval(substr($node->text(),0,-1));
+                    $GLOBALS['notes'][$GLOBALS['curDomain']]['sum'] += intval(substr($node->text(), 0, -1));
                 }
             });
             ksort($GLOBALS['notes']);
@@ -106,7 +103,7 @@ class NotesParseCommand extends Command
             $e->setD4($GLOBALS['notes']['D4']['sum'] / $GLOBALS['notes']['D4']['count']);
             $e->setD5($GLOBALS['notes']['D5']['sum'] / $GLOBALS['notes']['D5']['count']);
             $e->setD6($GLOBALS['notes']['D6']['sum'] / $GLOBALS['notes']['D6']['count']);
-            $e->setTotal(($e->getD1()+$e->getD2()+$e->getD3()+$e->getD4()+$e->getD5()+$e->getD6())/6);
+            $e->setTotal(($e->getD1() + $e->getD2() + $e->getD3() + $e->getD4() + $e->getD5() + $e->getD6()) / 6);
 
             $io->success('Persisted ' . $e->getFullName());
         });

@@ -80,7 +80,7 @@ class Student
     public function setD1(float $d1): self
     {
         $this->d1 = $d1;
-        if($d1 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
+        if ($d1 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
 
         return $this;
     }
@@ -93,7 +93,7 @@ class Student
     public function setD2(float $d2): self
     {
         $this->d2 = $d2;
-        if($d2 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
+        if ($d2 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
 
         return $this;
     }
@@ -106,7 +106,7 @@ class Student
     public function setD3(float $d3): self
     {
         $this->d3 = $d3;
-        if($d3 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
+        if ($d3 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
 
         return $this;
     }
@@ -119,7 +119,7 @@ class Student
     public function setD4(float $d4): self
     {
         $this->d4 = $d4;
-        if($d4 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
+        if ($d4 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
 
         return $this;
     }
@@ -132,7 +132,7 @@ class Student
     public function setD5(float $d5): self
     {
         $this->d5 = $d5;
-        if($d5 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
+        if ($d5 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
 
         return $this;
     }
@@ -145,7 +145,7 @@ class Student
     public function setD6(float $d6): self
     {
         $this->d6 = $d6;
-        if($d6 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
+        if ($d6 >= 66.66) $this->setAcquieredDomains($this->acquieredDomains + 1);
 
         return $this;
     }
