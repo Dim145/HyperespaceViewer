@@ -2,53 +2,33 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
-
-#[ApiResource(
-    collectionOperations: [
-        'get' => ['normalization_context'=>['groups'=>'collection:get']]
-    ],
-    itemOperations: [
-        'get' => [
-            'normalization_context'=>['groups'=>'collection:get'],
-        ]
-    ],
-    attributes: [
-        'order'=> ['total'=>'DESC']
-    ]
-)]
-#[ApiFilter(SearchFilter::class, properties: ['number' => 'exact'])]
-#[ApiFilter(OrderFilter::class, properties: ['total', 'name', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'acquieredDomains'], arguments: ['orderParameterName' => 'order'])]
 class Student
 {
-    private $id;
+    private ?int $id;
 
-    private $number;
+    private ?string $number;
 
-    private $fullName;
+    private ?string $fullName;
 
-    private $fileName;
+    private ?string $fileName;
 
-    private $d1;
+    private ?float $d1;
 
-    private $d2;
+    private ?float $d2;
 
-    private $d3;
+    private ?float $d3;
 
-    private $d4;
+    private ?float $d4;
 
-    private $d5;
+    private ?float $d5;
 
-    private $d6;
+    private ?float $d6;
 
-    private $total;
+    private ?float $total;
 
-    private $acquieredDomains = 0;
+    private int $acquieredDomains = 0;
 
-    private $isAlternant = false;
+    private bool $isAlternant = false;
 
 
     public function getId(): ?int
