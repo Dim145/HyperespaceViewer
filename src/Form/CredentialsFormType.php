@@ -20,10 +20,10 @@ class CredentialsFormType extends AbstractType
             ])
             ->add('password',PasswordType::class, [
                 'label' => false,
-                'attr'=>['placeholder'=>'Mot de passe', 'class'=>'form-control bg-dark text-white']
+                'attr'=>['placeholder'=>'Mot de passe', 'class'=>'form-control bg-dark text-white mt-1']
             ])
             ->add('submit', SubmitType::class, [
-                'attr' => ['class'=>'w-100 btn btn-primary mt-2']
+                'attr' => ['class'=>'w-100 btn btn-primary mt-3']
             ])
         ;
     }
