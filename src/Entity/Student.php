@@ -3,17 +3,10 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
-use App\Repository\StudentRepository;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass=StudentRepository::class)
- */
 #[ApiResource(
     collectionOperations: [
         'get' => ['normalization_context'=>['groups'=>'collection:get']]
@@ -31,84 +24,30 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiFilter(OrderFilter::class, properties: ['total', 'name', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'acquieredDomains'], arguments: ['orderParameterName' => 'order'])]
 class Student
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     * @ApiProperty(identifier=false)
-     */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @ApiProperty(identifier=true)
-     * @Groups({"collection:get"})
-     */
     private $number;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"collection:get"})
-     */
     private $fullName;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $fileName;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Groups("collection:get")
-     */
     private $d1;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Groups("collection:get")
-     */
     private $d2;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Groups("collection:get")
-     */
     private $d3;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Groups("collection:get")
-     */
     private $d4;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Groups("collection:get")
-     */
     private $d5;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Groups("collection:get")
-     */
     private $d6;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Groups("collection:get")
-     */
     private $total;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups("collection:get")
-     */
     private $acquieredDomains = 0;
 
-    /**
-     * @ORM\Column(type="boolean")
-     * @Groups("collection:get")
-     */
     private $isAlternant = false;
 
 

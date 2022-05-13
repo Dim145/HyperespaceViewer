@@ -3,14 +3,12 @@
 namespace App\Command;
 
 use App\Entity\Student;
-use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DomCrawler\Crawler;
@@ -21,12 +19,9 @@ use Symfony\Component\DomCrawler\Crawler;
 )]
 class NotesParseCommand extends Command
 {
-    private EntityManagerInterface $em;
-
-    public function __construct(EntityManagerInterface $em)
+    public function __construct()
     {
         parent::__construct(null);
-        $this->em = $em;
     }
 
     protected function configure(): void
@@ -84,7 +79,7 @@ class NotesParseCommand extends Command
             $GLOBALS['curDomain'] = null;
             $e->setFullName($crawler->filter('h1:first-child')->text());
             $e->setNumber(trim(explode(':',$crawler->filter('ul li:last-child')->text())[1]));
-            if($student = $this->em->getRepository(Student::class)->findOneBy(['number'=>$e->getNumber()])) $e = $student;
+            //if($student = $this->em->getRepository(Student::class)->findOneBy(['number'=>$e->getNumber()])) $e = $student;
             $status = $crawler->filter('ul li:nth-child(3)')->text();
             if(trim($status) == 'Syllabus Alt') $e->setIsAlternant(true);
             $selector = $e->getIsAlternant() ? 'th.level0, td.col13' : 'th.level0, td.col15';
@@ -112,8 +107,7 @@ class NotesParseCommand extends Command
             $e->setD5($GLOBALS['notes']['D5']['sum'] / $GLOBALS['notes']['D5']['count']);
             $e->setD6($GLOBALS['notes']['D6']['sum'] / $GLOBALS['notes']['D6']['count']);
             $e->setTotal(($e->getD1()+$e->getD2()+$e->getD3()+$e->getD4()+$e->getD5()+$e->getD6())/6);
-            $this->em->persist($e);
-            $this->em->flush();
+
             $io->success('Persisted ' . $e->getFullName());
         });
 

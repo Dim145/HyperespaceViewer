@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container-fluid h-100">
+    <div class="container-fluid h-100 bg-dark text-white">
         <div class="row h-100">
             <div class="col-lg-4 d-flex justify-content-center align-items-center h-100">
                 {{ form_start(form) }}
@@ -9,7 +9,7 @@
             </div>
             <div class="col-lg-8 d-flex justify-content-center align-items-center h-100">
                 {% if notes is defined %}
-                    <table class="table">
+                    <table class="table table-dark table-striped table-hover">
                         <thead>
                         <tr>
                             <th>Domain</th>
