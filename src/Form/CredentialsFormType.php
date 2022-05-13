@@ -16,14 +16,14 @@ class CredentialsFormType extends AbstractType
         $builder
             ->add('username', TextType::class, [
                 'label' => false,
-                'attr'=>['placeholder'=>'Nom d\'utilisateur']
+                'attr'=>['placeholder'=>'Nom d\'utilisateur', 'class' => 'form-control']
             ])
             ->add('password',PasswordType::class, [
                 'label' => false,
-                'attr'=>['placeholder'=>'Mot de passe']
+                'attr'=>['placeholder'=>'Mot de passe', 'class'=>'form-control']
             ])
             ->add('submit', SubmitType::class, [
-                'attr' => ['class'=>'w-100 btn btn-primary']
+                'attr' => ['class'=>'w-100 btn btn-primary mt-2']
             ])
         ;
     }
