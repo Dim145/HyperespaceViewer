@@ -23,12 +23,12 @@
                         </tr>
                         </thead>
                         {% for domain,data in notes %}
-                            <tr>
-                                <td>{{ domain }}</td>
+                            <tr class="{{ data['percent'] <= 30 ? "text-danger" : (data['percent'] < 66 ? "text-warning" : (data['percent'] == 100 ? "text-success" : "")) }}">
+                            <td>{{ domain }}</td>
                                 <td>{{ data['total'] }}</td>
                                 <td>{{ data['validated'] }}</td>
                                 <td>{{ data['not-validated'] }}</td>
-                                <td>{{ (data['validated']/data['total']*100)|round(2) }}%</td>
+                                <td>{{ data['percent'] }}%</td>
                             </tr>
                         {% endfor %}
                     </table>

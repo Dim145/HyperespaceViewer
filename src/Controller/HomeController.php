@@ -65,6 +65,16 @@ class HomeController extends AbstractController
                     }
                 });
             });
+
+            $datas = [];
+            foreach ($GLOBALS['notes'] as $note)
+            {
+                $note['percent'] = round(($note['validated']/$note['total']*100), 2);
+                $datas[] = $note;
+            }
+
+            $GLOBALS['notes'] = $datas;
+
             ksort($GLOBALS['notes']);
             return $this->renderForm('home/index.html.twig', [
                 'form' => $form,
