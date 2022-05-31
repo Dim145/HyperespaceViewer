@@ -67,10 +67,10 @@ class HomeController extends AbstractController
             });
 
             $datas = [];
-            foreach ($GLOBALS['notes'] as $note)
+            foreach ($GLOBALS['notes'] as $key => $note)
             {
                 $note['percent'] = round(($note['validated']/$note['total']*100), 2);
-                $datas[] = $note;
+                $datas[$key] = $note;
             }
 
             $GLOBALS['notes'] = $datas;
